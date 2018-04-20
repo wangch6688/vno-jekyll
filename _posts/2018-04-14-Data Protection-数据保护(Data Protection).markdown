@@ -4,8 +4,8 @@ title: Sample Post
 date: 2018-04-14 15:32:24.000000000 +09:00
 ---
 
-    ##数据保护API--
-    文件系统中的文件、keychain中的项，都是加密存储的。当用户解锁设备后，系统通过UDID密钥和用户设定的密码生成一个用于解密的密码密钥，存放在内存中，直到设备再次被锁，开发者可以通过Data Protection API 来设定文件系统中的文件、keychain中的项应该何时被解密。
+##数据保护API--
+文件系统中的文件、keychain中的项，都是加密存储的。当用户解锁设备后，系统通过UDID密钥和用户设定的密码生成一个用于解密的密码密钥，存放在内存中，直到设备再次被锁，开发者可以通过Data Protection API 来设定文件系统中的文件、keychain中的项应该何时被解密。
 
 
     1> 文件保护
@@ -51,8 +51,8 @@ date: 2018-04-14 15:32:24.000000000 +09:00
     kSecAttrAccessibleAlwaysThisDeviceOnly                  //keychain未受保护，任何时候都可以访问，但是不能转移到其他设备
     {% endhighlight %}
 
-    应用实例
-    把一段信息infoStrng字符串写进文件，然后通过Data Protection API设置保护。
+应用实例
+把一段信息infoStrng字符串写进文件，然后通过Data Protection API设置保护。
     {% highlight ruby %}
     NSString *documentsPath =[NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
     NSString *filePath = [documentsPath stringByAppendingPathComponent:@"DataProtect"];
@@ -68,4 +68,4 @@ date: 2018-04-14 15:32:24.000000000 +09:00
 
     {% endhighlight %}
 
-    设备锁屏（带密码保护）后，即使是越狱机，在root权限下cat读取那个文件信息也会被拒绝!
+设备锁屏（带密码保护）后，即使是越狱机，在root权限下cat读取那个文件信息也会被拒绝!
