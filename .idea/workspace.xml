@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e5249c9e-1184-42cb-872e-1f28fda9aa40" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_posts/2016-02-15-sample-post.markdown" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_posts/2016-02-16-hello-world-vno.markdown" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_posts/2018-03-18-Kevin-CCW-neo.markdown" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/_posts/2018-03-23-Book-First-wind and cloud.markdown" afterPath="" />
-    </list>
+    <list default="true" id="e5249c9e-1184-42cb-872e-1f28fda9aa40" name="Default" comment="" />
     <ignored path="wangch6688.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
