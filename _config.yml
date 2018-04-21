@@ -4,9 +4,9 @@ subtitle: 仗剑行千里，微躯敢一言。<br>曾为大梁客，不负信陵
 
 welcome_message: <a href="https://github.com/onevcat/vno-jekyll" target="_blank">Download the theme</a>
 description: Vno Jekyll is a port of my Ghost theme vno.
-creator: <a href="http://onev.cat">@onevcat</a>
+creator: <a href="http://ccwKevin.club">@Kevin</a>
 
-url: "http://vno.onevcat.com"
+url: "http://ccwKevin.club"
 
 permalink: /:year/:month/:title/
 
@@ -33,7 +33,7 @@ paginate_path: "page/:num/"
 
 # Comment
 comment:
-    disqus: vno-jekyll
+    disqus: https://github.com/wangch6688/wangch6688.github.io
     # duoshuo: 
     
 # Social
