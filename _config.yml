@@ -33,7 +33,7 @@ paginate_path: "page/:num/"
 
 # Comment
 comment:
-    disqus: https://github.com/wangch6688/wangch6688.github.io
+    disqus: vno-jekyll
     # duoshuo: 
     
 # Social
