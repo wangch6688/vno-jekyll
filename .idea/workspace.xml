@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e5249c9e-1184-42cb-872e-1f28fda9aa40" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/_posts/2019-06-04-iOS-关键字atomic和nonatomic的区别.markdown" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/_posts/2019-06-04-iOS-关键字atomic和nonatomic的区别.markdown" afterPath="$PROJECT_DIR$/_posts/2019-06-04-iOS-关键字atomic和nonatomic的区别.markdown" />
     </list>
     <ignored path="wangch6688.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -67,7 +66,7 @@
       <file leaf-file-name="2018-04-14-Git-Git常用命令总结.markdown" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/_posts/2018-04-14-Git-Git常用命令总结.markdown">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.7777777">
+            <state vertical-scroll-proportion="0.0">
               <caret line="14" column="14" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
               <folding />
             </state>
@@ -77,7 +76,7 @@
       <file leaf-file-name="2016-03-15-iOS-NavigationBar设置阴影.markdown" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/_posts/2016-03-15-iOS-NavigationBar设置阴影.markdown">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-8.888889">
+            <state vertical-scroll-proportion="0.0">
               <caret line="16" column="18" selection-start-line="0" selection-start-column="0" selection-end-line="34" selection-end-column="18" />
               <folding />
             </state>
@@ -87,8 +86,8 @@
       <file leaf-file-name="2019-06-04-iOS-关键字atomic和nonatomic的区别.markdown" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/_posts/2019-06-04-iOS-关键字atomic和nonatomic的区别.markdown">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.96059114">
-              <caret line="52" column="24" selection-start-line="52" selection-start-column="24" selection-end-line="52" selection-end-column="24" />
+            <state vertical-scroll-proportion="0.35756853">
+              <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -666,7 +665,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/_posts/2018-04-14-Git-Git常用命令总结.markdown">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.7777777">
+        <state vertical-scroll-proportion="0.0">
           <caret line="14" column="14" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="14" />
           <folding />
         </state>
@@ -674,7 +673,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/_posts/2016-03-15-iOS-NavigationBar设置阴影.markdown">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-8.888889">
+        <state vertical-scroll-proportion="0.0">
           <caret line="16" column="18" selection-start-line="0" selection-start-column="0" selection-end-line="34" selection-end-column="18" />
           <folding />
         </state>
@@ -682,8 +681,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/_posts/2019-06-04-iOS-关键字atomic和nonatomic的区别.markdown">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.96059114">
-          <caret line="52" column="24" selection-start-line="52" selection-start-column="24" selection-end-line="52" selection-end-column="24" />
+        <state vertical-scroll-proportion="0.35756853">
+          <caret line="20" column="20" selection-start-line="20" selection-start-column="20" selection-end-line="20" selection-end-column="20" />
           <folding />
         </state>
       </provider>
