@@ -65,4 +65,4 @@ atomic修饰属性生成的getter/setter方法
 }
 {% endhighlight %}
 
-关于@sychronized同步锁，在atomic关键字修饰后创建的setter/getter方法中并不是使用的@sychronized同步锁，而是使用的互斥锁.关于其中的区别,会在下面的章节中具体说明.
+关于@sychronized同步锁，在atomic关键字修饰后创建的setter/getter方法中并不是使用的@sychronized同步锁，因为同步锁只能保证当前线程的运行完整性，无法保证具体是哪一个线程，所以还是会存在atomic本身的问题，所以atomic真正使用的是自旋锁，其实我们在开发中也可以通过GCD的栅栏过滤来模拟自旋锁,达到同样的效果.
