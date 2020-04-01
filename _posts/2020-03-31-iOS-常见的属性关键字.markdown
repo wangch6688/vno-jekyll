@@ -25,9 +25,9 @@ iOS在声明属性时，在ARC环境下常用的关键字基本上有：readonly
 但是weak比assign要多一个重要功能，**weak会在引用对象被释放的时候将该属性设为nil，而前者依然会指向原来的位置，这样就会导致野指针**。 在OC中，向一个nil对象发送消息不会crash，他会是方法而定，但会nil（返回值为对象）、0（返回值是一个基础数据）、0x0（返回值为id）。但是如果向一个对象发送他无法解析的消息是会crash的。
 
 >补充:  从storyboard或者xib上创建控件，在控件放在view上的时候，已经形成了如下的引用关系,以UIButton为例：
-    `UIViewController->UIView->subView->UIButton`  
-    然后你为这个UIButton声明一个weak属性
-    `@property(nonatomic,weak) IBOOutlet UIButton *btn;`
+    `UIViewController->UIView->subView->UIButton`     
+    然后你为这个UIButton声明一个weak属性    
+    `@property(nonatomic,weak) IBOOutlet UIButton *btn;`    
     相当于xib/sb对这个Button是强引用，你声明的属性对它是弱引用。
     
 ***strong和weak***
@@ -62,13 +62,13 @@ iOS在声明属性时，在ARC环境下常用的关键字基本上有：readonly
 1. MRC情况下，__block修饰，可以避免循环引用，但是在ARC时代下，__block修饰，同样会导致循环引用，使用__block修饰的实例在block中会被retain。
 >>解决方法：
 ```__block id blockSelf = self;
-self.block = ^{
-    NSLog(@"%@", blockSelf);
+self.block = ^{     
+    NSLog(@"%@", blockSelf);    
     self.block = nil;//block被释放后，block持有的blockSelf也会被释放掉
-};
-block();//一定要保证运行一次，否则无法释放
-这样就使block断开了与blockSelf的持有关系，好处是自己来控制对self的持有时间。
-但是在新的iOS版本中，这样做会被提示存在循环引用问题，这种写法不被推荐，除非你必须要在block中修改__block的指针指向。
+};  
+block();//一定要保证运行一次，否则无法释放  
+这样就使block断开了与blockSelf的持有关系，好处是自己来控制对self的持有时间。 
+但是在新的iOS版本中，这样做会被提示存在循环引用问题，这种写法不被推荐，除非你必须要在block中修改__block的指针指向。   
 其实__weak修饰，只是不能修改对象本身，但是可以对对象的属性进行修改。
 ```
 2. _unsafe_unretained修饰符曾经被视为__weak的替代品，但是不能将对象自动置为nil，所以尽可能不要采用这个修饰符。（__weak会自动置为nil）。
