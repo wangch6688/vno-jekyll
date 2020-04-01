@@ -61,17 +61,35 @@ iOS在声明属性时，在ARC环境下常用的关键字基本上有：readonly
 > 重点：
 1. MRC情况下，__block修饰，可以避免循环引用，但是在ARC时代下，__block修饰，同样会导致循环引用，使用__block修饰的实例在block中会被retain。
 >>解决方法：
-{% highlight ruby %}
+```
 __block id blockSelf = self;
-self.block = ^{  
-NSLog(@"%@", blockSelf);  
-self.block = nil;//block被释放后，block持有的blockSelf也会被释放掉  
+self.block = ^{    
+    NSLog(@"%@", blockSelf);   
+    self.block = nil;//block被释放后，block持有的blockSelf也会被释放掉   
 };  
 block();//一定要保证运行一次，否则无法释放    
+```
 这样就使block断开了与blockSelf的持有关系，好处是自己来控制对self的持有时间。   
 但是在新的iOS版本中，这样做会被提示存在循环引用问题，这种写法不被推荐，除非你必须要在block中修改__block的指针指向。     
 其实__weak修饰，只是不能修改对象本身，但是可以对对象的属性进行修改。
 {% endhighlight %}
 2. _unsafe_unretained修饰符曾经被视为__weak的替代品，但是不能将对象自动置为nil，所以尽可能不要采用这个修饰符。（__weak会自动置为nil）。
+
+***分类（category）和类拓展（extension）的区别***
+**Category**
++ 用于给class及其subclass添加新的方法
++ 有自己的单独的.h和.m文件
++ 用于添加新的方法，但是不能添加新的属性
++ **是运行期决议的，这一点决定了他为什么不能为已有的类添加新的成员变量，**实际上是允许添加属性的，同样可以使用@property，但是无法生成_var（带下划线的成员变量），也不会生成添加属性的getter和setter方法，所以尽管添加了属性，也无法通过点语法来调用getter和setter方法。
++ 通过runtime可以实现为category添加属性。 
+**Extension**
++ extension昌北称为匿名的Category
++ 用于给类添加新的方法，但是只作用于原始类，不作用于subclass
++ 只能对有implementation源代码的类写extension，对于没有implementation源代码的类，比如framework class是不可以的
++ extension可以为原始类添加新的方法和属性
++ 在编译期决议，是类的一部分，在编译期和头文件的@interface、实现文件里的@implement一起形成了一个完整的类。伴随类的产生而产生，也随着类的消失而消失
+
+**分类只能拓展方法（属性只是声明，没有具体的实现），类拓展介意扩展属性、成员变量和方法**
+
 
 
