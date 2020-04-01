@@ -1,8 +1,8 @@
 
 iOS在声明属性时，在ARC环境下常用的关键字基本上有：readonly、readwrite、nonatomic、atomic、strong、retain、assign、weak、copy、static、const、extern等，接下来对这些关键字的异同进行分析。
 
-**readonly和readwrite**
->关键字从字面意思可以很清楚的了解其应用，readonly只读和readwrite可读写。readwrite是属性创建时的默认属性，同时拥有setter、getter方法，而readonly只生成getter方法，没有setter方法。
+***readonly和readwrite***
+关键字从字面意思可以很清楚的了解其应用，readonly只读和readwrite可读写。readwrite是属性创建时的默认属性，同时拥有setter、getter方法，而readonly只生成getter方法，没有setter方法。
 借此联想到下面两个关键字@synthesize和@dynamic
 + @synthesize
     在编译期间，让编译器自动去生成setter和getter方法。当有自定义的存或取方法时，自定义方法会被屏蔽并且自动生成该方法。@property默认是自动生成setter和getter方法。  
@@ -13,26 +13,26 @@ iOS在声明属性时，在ARC环境下常用的关键字基本上有：readonly
 
 ***nonatomic和atomic***
 + nonatomic
-    >非原子访问，对属性赋值的时候不加锁，多线程并发访问时会提高性能。如果不声明此属性，默认为atomic提供线程安全。
+    非原子访问，对属性赋值的时候不加锁，多线程并发访问时会提高性能。如果不声明此属性，默认为atomic提供线程安全。
 + atomic
-    >原子访问，多线程环境下，原子操作是必要的，否则有可能引起错误的结果（就是防止同时对数据修改或者访问而导致的问题）。atomic的意思就是setter/getter函数是一个原子操作。如果有多个线程同时调用setter的话，不会出现某一个线程在执行setter语句还未完成，另一个线程开始执行setter的情况，相当于函数头尾加了锁一样，可以保证数据的完整性。 nonatomic不保证setter/getter的原语性，所以你可能会取到不完整的东西。因此，在多线程的环境下原子操作是非常必要的，否则有可能会引起错误的结果。 atomic针对setter方法加的锁是**自旋锁**，这种锁常规情况下不会出现问题，但是如果针对有优先级的多线程访问，可能会导致**优先级翻转**的问题。
+    原子访问，多线程环境下，原子操作是必要的，否则有可能引起错误的结果（就是防止同时对数据修改或者访问而导致的问题）。atomic的意思就是setter/getter函数是一个原子操作。如果有多个线程同时调用setter的话，不会出现某一个线程在执行setter语句还未完成，另一个线程开始执行setter的情况，相当于函数头尾加了锁一样，可以保证数据的完整性。 nonatomic不保证setter/getter的原语性，所以你可能会取到不完整的东西。因此，在多线程的环境下原子操作是非常必要的，否则有可能会引起错误的结果。 atomic针对setter方法加的锁是**自旋锁**，这种锁常规情况下不会出现问题，但是如果针对有优先级的多线程访问，可能会导致**优先级翻转**的问题。
 
 ***strong和retain***
-   >两个属性都是强引用,可以让被修饰的属性或对象引用计数+1，大部分情况下是可以通用的。主要区别在于修饰block属性的时候，block一般我们都是用copy进行修饰，block在创建的时候，他的内存是默认分配到栈区（stack）的，而不是在堆区（heap）上，所以他的生命周期会随着函数的结束而结束，而你在该作用域外调用该block时，程序就会crash，copy之后就会放到堆区，从而延长生命周期。  ARC情况下，strong（copy）和retain对block进行修饰，效果是相同的，但是在MRC情况下，因为block是在栈区的，所以在修饰前需要注意block是否还存在，以免因为操作了野指针而导致崩溃，同样这是strong（copy）要比retain更安全。strong在修饰block 的时候就相当于copy，而retain在修饰block的时候就相当于assign，这样block会有提前释放的风险。    注意：**ARC情况下，编译器已经默认对block进行了copy操作**。
++ 两个属性都是强引用,可以让被修饰的属性或对象引用计数+1，大部分情况下是可以通用的。主要区别在于修饰block属性的时候，block一般我们都是用copy进行修饰，block在创建的时候，他的内存是默认分配到栈区（stack）的，而不是在堆区（heap）上，所以他的生命周期会随着函数的结束而结束，而你在该作用域外调用该block时，程序就会crash，copy之后就会放到堆区，从而延长生命周期。  ARC情况下，strong（copy）和retain对block进行修饰，效果是相同的，但是在MRC情况下，因为block是在栈区的，所以在修饰前需要注意block是否还存在，以免因为操作了野指针而导致崩溃，同样这是strong（copy）要比retain更安全。strong在修饰block 的时候就相当于copy，而retain在修饰block的时候就相当于assign，这样block会有提前释放的风险。    注意：**ARC情况下，编译器已经默认对block进行了copy操作**。
     
 ***assign和weak***
->两个都是弱引用，assign通常用来修饰基础数据类型（NSInteger、CGFloat）和C数据类型（int、float、double、char等），还有代理属性的修饰、xib、storyboard中拖出来的属性，基本上两者是可以通用的。   
->但是weak比assign要多一个重要功能，**weak会在引用对象被释放的时候将该属性设为nil，而前者依然会指向原来的位置，这样就会导致野指针**。 在OC中，向一个nil对象发送消息不会crash，他会是方法而定，但会nil（返回值为对象）、0（返回值是一个基础数据）、0x0（返回值为id）。但是如果向一个对象发送他无法解析的消息是会crash的。
+两个都是弱引用，assign通常用来修饰基础数据类型（NSInteger、CGFloat）和C数据类型（int、float、double、char等），还有代理属性的修饰、xib、storyboard中拖出来的属性，基本上两者是可以通用的。   
+但是weak比assign要多一个重要功能，**weak会在引用对象被释放的时候将该属性设为nil，而前者依然会指向原来的位置，这样就会导致野指针**。 在OC中，向一个nil对象发送消息不会crash，他会是方法而定，但会nil（返回值为对象）、0（返回值是一个基础数据）、0x0（返回值为id）。但是如果向一个对象发送他无法解析的消息是会crash的。
 
->>补充:  从storyboard或者xib上创建控件，在控件放在view上的时候，已经形成了如下的引用关系,以UIButton为例：
+>补充:  从storyboard或者xib上创建控件，在控件放在view上的时候，已经形成了如下的引用关系,以UIButton为例：
     `UIViewController->UIView->subView->UIButton`  
     然后你为这个UIButton声明一个weak属性
     `@property(nonatomic,weak) IBOOutlet UIButton *btn;`
     相当于xib/sb对这个Button是强引用，你声明的属性对它是弱引用。
     
 ***strong和weak***
->一个强引用一个弱引用，weak指针更多的使用在解除循环引用上面，大部分在父-子关系处理上，父类拥有子类的strong指针，所以父类对子类进行了持有，这是为了防止所有权循环，子类需要使用weak指针指向父类。
->>比较典型的例子就是delegate模式，self.view拥有了一个tableview，这时候tableview的dataSource和delegate都是weak指针指向viewController。
+一个强引用一个弱引用，weak指针更多的使用在解除循环引用上面，大部分在父-子关系处理上，父类拥有子类的strong指针，所以父类对子类进行了持有，这是为了防止所有权循环，子类需要使用weak指针指向父类。
+>比较典型的例子就是delegate模式，self.view拥有了一个tableview，这时候tableview的dataSource和delegate都是weak指针指向viewController。
 
 ***strong和retain***
     声明属性时，strong和retain效果是一样的，没什么区别。但是在生命block的时候，strong和reetain会有截然不同的效果。strong会相当于copy，而retain相当于assign。
@@ -41,7 +41,36 @@ iOS在声明属性时，在ARC环境下常用的关键字基本上有：readonly
     copy分为浅拷贝和深拷贝：  
     1. 浅拷贝，只对指向对象的指针进行了复制，所以说copy结束后，会发现是两个指针指向同一个内存地址。
     2. 深拷贝，会把对象的指针和内存全部拷贝，相当于生成了一个新的对象，虽然不两个值相等，但是是两个对象。**两个对象之间互不影响，互不干扰**。
-> a. 在平时定义属性的时候，对于NSString、NSArray、NSDictionary类型的属性，我们最好设置为copy类型，这样别人使用我们定义的属性的时候，它不管怎么改动该属性的赋值，都不会影响我们给该属性赋的值。 
-b. 同样block作为属性是也用copy。
-c. 不要将copy关键字用到NSMutableString、NSMutableArray、NSMutableDictionary等可变对象上，要用Strong关键字。
+> a.在平时定义属性的时候，对于NSString、NSArray、NSDictionary类型的属性，我们最好设置为copy类型，这样别人使用我们定义的属性的时候，它不管怎么改动该属性的赋值，都不会影响我们给该属性赋的值。   
+    b.同样block作为属性是也用copy。
+    c.不要将copy关键字用到NSMutableString、NSMutableArray、NSMutableDictionary等可变对象上，要用Strong关键字。
+    
+***copy和retain***
+    copy和retain处理流程是一样的，先对旧值release，再copy出新的对象，而retain是指针copy，copy了一份原来的指针，释放原来指针指向的对象的内容，再令新的指针指向新的对象内容，简单来说一个指针copy一个是内容copy。  
+    主要区别：在给不可变对象赋值时，如NSArray、NSString等，如果修改了原数据，那么使用retain修饰的那个值也会跟着变化（strong），而copy不会。
+    
+***const和宏的区别***
+1. 编译时刻不同，宏属于预编译时刻，const属于编译时刻。
+2. 宏能定义代码，const不能，使用宏定义过多的话，会导致编译速度越来越慢，而const只会编译一次，缩短编译时间。
+3. 宏不会检查错误，而const会检查错误，这是由编译时刻决定的。
+
+***__block和__weak的区别***   
+    __block无论是在ARC还是MRC模式下都能使用，可以可以修饰对象，也可以修饰基本数据类型。
+    __weak只能在ARC模式下使用，只能修饰对象，不能修饰基本数据类型。
+    __block修饰的对象可以在block中重新被赋值被修改，__weak修饰的对象无法进行修改。
+> 重点：
+1. MRC情况下，__block修饰，可以避免循环引用，但是在ARC时代下，__block修饰，同样会导致循环引用，使用__block修饰的实例在block中会被retain。
+>>解决方法：
+```__block id blockSelf = self;
+self.block = ^{
+    NSLog(@"%@", blockSelf);
+    self.block = nil;//block被释放后，block持有的blockSelf也会被释放掉
+};
+block();//一定要保证运行一次，否则无法释放
+这样就使block断开了与blockSelf的持有关系，好处是自己来控制对self的持有时间。
+但是在新的iOS版本中，这样做会被提示存在循环引用问题，这种写法不被推荐，除非你必须要在block中修改__block的指针指向。
+其实__weak修饰，只是不能修改对象本身，但是可以对对象的属性进行修改。
+```
+2. _unsafe_unretained修饰符曾经被视为__weak的替代品，但是不能将对象自动置为nil，所以尽可能不要采用这个修饰符。（__weak会自动置为nil）。
+
 
