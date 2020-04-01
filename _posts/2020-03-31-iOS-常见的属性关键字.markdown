@@ -73,7 +73,7 @@ block();//一定要保证运行一次，否则无法释放
 但是在新的iOS版本中，这样做会被提示存在循环引用问题，这种写法不被推荐，除非你必须要在block中修改__block的指针指向。     
 其实__weak修饰，只是不能修改对象本身，但是可以对对象的属性进行修改。
 {% endhighlight %}
-2. _unsafe_unretained修饰符曾经被视为__weak的替代品，但是不能将对象自动置为nil，所以尽可能不要采用这个修饰符。（__weak会自动置为nil）。
+>>2. _unsafe_unretained修饰符曾经被视为__weak的替代品，但是不能将对象自动置为nil，所以尽可能不要采用这个修饰符。（__weak会自动置为nil）。
 
 ***分类（category）和类拓展（extension）的区别***
 **Category**

@@ -4,9 +4,9 @@ subtitle: 仗剑行千里，微躯敢一言。<br>曾为大梁客，不负信陵
 
 welcome_message: <a href="https://github.com/onevcat/vno-jekyll" target="_blank">Download the theme</a>
 description: Vno Jekyll is a port of my Ghost theme vno.
-creator: <a href="http://ccwKevin.club">@Kevin</a>
+creator: <a href="http://ccwnote.top">@Kevin</a>
 
-url: "http://ccwKevin.club"
+url: "http://ccwnote.top"
 
 permalink: /:year/:month/:title/
 
@@ -23,7 +23,7 @@ blog_button:
 
 # Navigation buttons in the front page.
 nav:
-    - {title: Projects, description: My Projects, url: 'http://project.onevcat.com'}
+    - {title: Projects, description: My Projects, url: 'https://github.com/wangch6688/repositories'}
     # - {title: Another Button, description: A button, url: 'http://example.com'}
 
 # Pagination
@@ -38,10 +38,10 @@ comment:
     
 # Social
 social:
-    weibo: onevcat
+#    weibo: onevcat
     github: wangch6688
     twitter: KingmessCrl
-    gplus: 107108267983477358170
+#    gplus: 107108267983477358170
     mail: wangch6688@hotmail.com
 
 # Google Analytics
