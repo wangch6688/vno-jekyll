@@ -21,4 +21,27 @@ iOS在声明属性时，在ARC环境下常用的关键字基本上有：readonly
    >两个属性都是强引用,可以让被修饰的属性或对象引用计数+1，大部分情况下是可以通用的。主要区别在于修饰block属性的时候，block一般我们都是用copy进行修饰，block在创建的时候，他的内存是默认分配到栈区（stack）的，而不是在堆区（heap）上，所以他的生命周期会随着函数的结束而结束，而你在该作用域外调用该block时，程序就会crash，copy之后就会放到堆区，从而延长生命周期。  ARC情况下，strong（copy）和retain对block进行修饰，效果是相同的，但是在MRC情况下，因为block是在栈区的，所以在修饰前需要注意block是否还存在，以免因为操作了野指针而导致崩溃，同样这是strong（copy）要比retain更安全。strong在修饰block 的时候就相当于copy，而retain在修饰block的时候就相当于assign，这样block会有提前释放的风险。    注意：**ARC情况下，编译器已经默认对block进行了copy操作**。
     
 ***assign和weak***
+>两个都是弱引用，assign通常用来修饰基础数据类型（NSInteger、CGFloat）和C数据类型（int、float、double、char等），还有代理属性的修饰、xib、storyboard中拖出来的属性，基本上两者是可以通用的。   
+>但是weak比assign要多一个重要功能，**weak会在引用对象被释放的时候将该属性设为nil，而前者依然会指向原来的位置，这样就会导致野指针**。 在OC中，向一个nil对象发送消息不会crash，他会是方法而定，但会nil（返回值为对象）、0（返回值是一个基础数据）、0x0（返回值为id）。但是如果向一个对象发送他无法解析的消息是会crash的。
+
+>>补充:  从storyboard或者xib上创建控件，在控件放在view上的时候，已经形成了如下的引用关系,以UIButton为例：
+    `UIViewController->UIView->subView->UIButton`  
+    然后你为这个UIButton声明一个weak属性
+    `@property(nonatomic,weak) IBOOutlet UIButton *btn;`
+    相当于xib/sb对这个Button是强引用，你声明的属性对它是弱引用。
+    
+***strong和weak***
+>一个强引用一个弱引用，weak指针更多的使用在解除循环引用上面，大部分在父-子关系处理上，父类拥有子类的strong指针，所以父类对子类进行了持有，这是为了防止所有权循环，子类需要使用weak指针指向父类。
+>>比较典型的例子就是delegate模式，self.view拥有了一个tableview，这时候tableview的dataSource和delegate都是weak指针指向viewController。
+
+***strong和retain***
+    声明属性时，strong和retain效果是一样的，没什么区别。但是在生命block的时候，strong和reetain会有截然不同的效果。strong会相当于copy，而retain相当于assign。
+
+***copy***
+    copy分为浅拷贝和深拷贝：  
+    1. 浅拷贝，只对指向对象的指针进行了复制，所以说copy结束后，会发现是两个指针指向同一个内存地址。
+    2. 深拷贝，会把对象的指针和内存全部拷贝，相当于生成了一个新的对象，虽然不两个值相等，但是是两个对象。**两个对象之间互不影响，互不干扰**。
+> a. 在平时定义属性的时候，对于NSString、NSArray、NSDictionary类型的属性，我们最好设置为copy类型，这样别人使用我们定义的属性的时候，它不管怎么改动该属性的赋值，都不会影响我们给该属性赋的值。 
+b. 同样block作为属性是也用copy。
+c. 不要将copy关键字用到NSMutableString、NSMutableArray、NSMutableDictionary等可变对象上，要用Strong关键字。
 
