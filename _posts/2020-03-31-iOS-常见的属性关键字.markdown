@@ -5,8 +5,8 @@ iOS在声明属性时，在ARC环境下常用的关键字基本上有：readonly
 >关键字从字面意思可以很清楚的了解其应用，readonly只读和readwrite可读写。readwrite是属性创建时的默认属性，同时拥有setter、getter方法，而readonly只生成getter方法，没有setter方法。
 借此联想到下面两个关键字@synthesize和@dynamic
 + @synthesize
-    在编译期间，让编译器自动去生成setter和getter方法。当有自定义的存或取方法时，自定义方法会被屏蔽并且自动生成该方法。@property默认是自动生成setter和getter方法。
-    `@synthesize name = _name` 这是默认生成的
+    在编译期间，让编译器自动去生成setter和getter方法。当有自定义的存或取方法时，自定义方法会被屏蔽并且自动生成该方法。@property默认是自动生成setter和getter方法。  
+    `@synthesize name = _name` 这是默认生成的  
     `@synthesize name = _myName` _myName就是我们自己生成
 + @dynamic
     告诉编译器，不自动生成setter、getter方法，避免编译期间产生警告，然后由自己实现存取方法在运行时动态创建绑定：主要用在CoreData实现MSManagerObject子类时使用，由CoreData框架在程序运行的时候动态生成子类属性。动态绑定一个属性的实现，直白的说，就是告诉编译器这个属性你不需要去任何操作，完全由程序员自己来完成实现，包括getter、setter方法。
@@ -15,11 +15,10 @@ iOS在声明属性时，在ARC环境下常用的关键字基本上有：readonly
 + nonatomic
     >非原子访问，对属性赋值的时候不加锁，多线程并发访问时会提高性能。如果不声明此属性，默认为atomic提供线程安全。
 + atomic
-    >原子访问，多线程环境下，原子操作是必要的，否则有可能引起错误的结果（就是防止同时对数据修改或者访问而导致的问题）。atomic的意思就是setter/getter函数是一个原子操作。如果有多个线程同时调用setter的话，不会出现某一个线程在执行setter语句还未完成，另一个线程开始执行setter的情况，相当于函数头尾加了锁一样，可以保证数据的完整性。nonatomic不保证setter/getter的原语性，所以你可能会取到不完整的东西。因此，在多线程的环境下原子操作是非常必要的，否则有可能会引起错误的结果。atomic针对setter方法加的锁是**自旋锁**，这种锁常规情况下不会出现问题，但是如果针对有优先级的多线程访问，可能会导致**优先级翻转**的问题。
+    >原子访问，多线程环境下，原子操作是必要的，否则有可能引起错误的结果（就是防止同时对数据修改或者访问而导致的问题）。atomic的意思就是setter/getter函数是一个原子操作。如果有多个线程同时调用setter的话，不会出现某一个线程在执行setter语句还未完成，另一个线程开始执行setter的情况，相当于函数头尾加了锁一样，可以保证数据的完整性。 nonatomic不保证setter/getter的原语性，所以你可能会取到不完整的东西。因此，在多线程的环境下原子操作是非常必要的，否则有可能会引起错误的结果。 atomic针对setter方法加的锁是**自旋锁**，这种锁常规情况下不会出现问题，但是如果针对有优先级的多线程访问，可能会导致**优先级翻转**的问题。
 
 ***strong和retain***
-   >两个属性都是强引用,可以让被修饰的属性或对象引用计数+1，大部分情况下是可以通用的。主要区别在于修饰block属性的时候，block一般我们都是用copy进行修饰，block在创建的时候，他的内存是默认分配到栈区（stack）的，而不是在堆区（heap）上，所以他的生命周期会随着函数的结束而结束，而你在该作用域外调用该block时，程序就会crash，copy之后就会放到堆区，从而延长生命周期。ARC情况下，strong（copy）和retain对block进行修饰，效果是相同的，但是在MRC情况下，因为block是在栈区的，所以在修饰前需要注意block是否还存在，以免因为操作了野指针而导致崩溃，同样这是strong（copy）要比retain更安全。strong在修饰block 的时候就相当于copy，而retain在修饰block的时候就相当于assign，这样block会有提前释放的风险。
-    注意：**ARC情况下，编译器已经默认对block进行了copy操作**。
+   >两个属性都是强引用,可以让被修饰的属性或对象引用计数+1，大部分情况下是可以通用的。主要区别在于修饰block属性的时候，block一般我们都是用copy进行修饰，block在创建的时候，他的内存是默认分配到栈区（stack）的，而不是在堆区（heap）上，所以他的生命周期会随着函数的结束而结束，而你在该作用域外调用该block时，程序就会crash，copy之后就会放到堆区，从而延长生命周期。  ARC情况下，strong（copy）和retain对block进行修饰，效果是相同的，但是在MRC情况下，因为block是在栈区的，所以在修饰前需要注意block是否还存在，以免因为操作了野指针而导致崩溃，同样这是strong（copy）要比retain更安全。strong在修饰block 的时候就相当于copy，而retain在修饰block的时候就相当于assign，这样block会有提前释放的风险。    注意：**ARC情况下，编译器已经默认对block进行了copy操作**。
     
 ***assign和weak***
 
