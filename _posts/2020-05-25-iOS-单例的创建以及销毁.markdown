@@ -6,11 +6,13 @@
 4.如果需要copy，需要遵守NSCopying协议，以及在copyWithZone中直接返回当前对象
 
 ***声明静态instance***
+
 `static MyClass _instance;`
 
 
-***创建单例***
-+   方法1
+**创建单例**
+
+****方法1****
 ```
 + (id)shareInstance {
     @synchronized(self) {//同步锁
@@ -21,14 +23,19 @@
     return _instance;
 }
 ```
-销毁方法：
+
+
+****销毁方法：****
+
+
 ```
 + (void)attemptDealloc {
     _instance = nil;
 }
 ```
 
-+ 方法2
+ ****方法2****
+
 ```
 static dispath_once_t onceToken;
 + (id)shareInstance {
@@ -41,7 +48,10 @@ static dispath_once_t onceToken;
 }
 
 ```
-销毁方法：
+
+****销毁方法：****
+
+
 ```
 + (void)attemptDealloc {
     onceToken = 0;//只有置为0，GCD才会认为它从来未执行过，这样才能保证下次再次调用instance的时候，创建新的对象
@@ -50,6 +60,8 @@ static dispath_once_t onceToken;
 ```
 
 ***重写allocWithZone***
+
+
 ```
 //重写allocWithZone,里面实现跟方法一,方法二一致就行
 +(id)allocWithZone:(struct _NSZone *)zone{
